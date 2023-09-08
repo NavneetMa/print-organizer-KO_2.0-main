@@ -1,0 +1,49 @@
+name: kwantapo
+publish_to: 'none'
+version: 0.0.55
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  floor: ^1.2.0
+  provider: ^6.0.1
+  path_provider: ^2.0.5
+  rxdart: ^0.27.2
+  permission_handler: ^10.0.0
+  share_plus: ^6.3.0
+  network_info_plus: ^3.0.1
+  shared_preferences: ^2.0.8
+  get: ^4.6.1
+  intl: ^0.17.0
+  bitmap: ^0.1.2
+  flutter_ringtone_player: ^3.2.0
+  retrofit: ^3.0.1
+  json_annotation: ^4.4.0
+  logger: ^1.1.0
+  wakelock: ^0.6.2
+  cast: ^1.1.0
+  esc_pos_printer: ^4.1.0
+  esc_pos_utils: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  build_runner: ^2.3.3
+  floor_generator: ^1.2.0
+  retrofit_generator: ^4.0.2
+  lint: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: Courier
+      fonts:
+        - asset: fonts/CourierPrime-Regular.ttf
+  assets:
+    - assets/drawable/
+    - assets/lang/
