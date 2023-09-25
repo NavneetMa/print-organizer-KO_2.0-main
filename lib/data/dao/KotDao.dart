@@ -69,4 +69,11 @@ abstract class KotDao {
 
   @Query('UPDATE ${TableNames.KOT} SET tableNameMatch = :tableNameMatch WHERE id = :id')
   Future<void> updateTableNameMatch(int id, bool tableNameMatch);
+
+  @Query('UPDATE ${TableNames.KOT} SET eyeColor = :eyeColor WHERE id = :id')
+  Future<void> updateEyeColor(int id, bool eyeColor);
+
+  @Query('SELECT eyeColor FROM ${TableNames.KOT} WHERE id = :id')
+  Future<bool?> getEyeColor(int id);
+
 }
