@@ -24,6 +24,8 @@ class Kot {
   bool hideKot = false;
   bool isUndoKot = false;
   bool tableNameMatch = false;
+  //RxBool eyeColor = false.obs;
+  bool eyeColor = false;
   int singleCategory = 1;
   bool inSum = false;
 
@@ -43,8 +45,13 @@ class Kot {
     this.isUndoKot = false,
     this.snoozeDateTime = "",
     this.tableNameMatch = false,
+    this.eyeColor = false,
+    //RxBool? eyeColor,
     this.singleCategory = 1,
-  }) : super();
+  }) :
+        //eyeColor = eyeColor ?? false.obs,
+
+        super();
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -62,6 +69,7 @@ class Kot {
         'hideKot': hideKot,
         'isUndoKot': isUndoKot,
         'tableMatch': tableNameMatch,
+        'eyeColor' : eyeColor,
         'singleCategory': singleCategory
       };
 
@@ -105,6 +113,7 @@ class Kot {
         hideKot: json['hideKot'] as bool,
         isUndoKot: json['isUndoKot'] as bool,
         tableNameMatch: json['tableNameMatch'] as bool,
+        //eyeColor: (json['eyeColor'] as bool).obs,
         singleCategory: json['singleCategory'] as int,);
   }
 }
