@@ -69,8 +69,8 @@ class _DashboardActivityState extends State<DashboardActivity> implements IMessa
               child: Scaffold(
                 backgroundColor: AppTheme.background,
                 resizeToAvoidBottomInset: false,
-                floatingActionButton:
-                AppConstants.sumMode==false ? MyFloatingActionButtons(): Container(),
+                // floatingActionButton:
+                // AppConstants.sumMode==false ? MyFloatingActionButtons(): Container(),
                 appBar: MainAppBar(scaffoldKey: _scaffoldKey, controller: Get.find<KOTController>()),
                 body: const KotListView(),
               ),
