@@ -7,9 +7,11 @@ import 'package:kwantapo/utils/lib.dart';
 class TimePassedCounter extends StatefulWidget {
 
   final String receivedTime;
+  final double containerWidth;
   const TimePassedCounter({
     Key? key,
     required this.receivedTime,
+    required this.containerWidth
   }) : super(key: key);
 
   @override
@@ -38,8 +40,9 @@ class _TimePassedCounter extends State<TimePassedCounter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.centerLeft,
-      padding: AppSpaces().smallLeftBottom,
+      alignment: Alignment.bottomLeft,
+      padding: const EdgeInsets.only(left: 2, bottom: 4,top: 2),
+      //AppSpaces().smallLeftBottom,
       width: 190,
       child: ValueListenableBuilder<String>(
         valueListenable: timerProvider,
@@ -47,7 +50,7 @@ class _TimePassedCounter extends State<TimePassedCounter> {
           return Text("${AppLocalization.instance.translate("time_passed")} ${timerProvider.passedTime}",
             style: TextStyles().titleStyleColored(
               color: AppTheme.lightRed,
-              textSize: 16,
+              textSize: (widget.containerWidth/20)*0.6,
             ),
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
