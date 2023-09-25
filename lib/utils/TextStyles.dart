@@ -44,7 +44,7 @@ class TextStyles {
   );
 
   TextStyle titleStyleLargeBlack() => const TextStyle(
-    fontSize: 24.0,
+    fontSize: 22.0,
     color: AppTheme.nearlyBlack,
     fontWeight: FontWeight.w600,
     fontFamily: 'Courier',
