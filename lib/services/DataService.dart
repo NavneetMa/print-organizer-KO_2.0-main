@@ -614,6 +614,8 @@ class DataService {
                   hideKot: eKot.hideKot,
                   singleCategory: eKot.singleCategory,
                   tableNameMatch: eKot.tableNameMatch,
+                  eyeColor: eKot.eyeColor
+                  //RxBool(eKot.eyeColor),
               ),
           );
         }
@@ -662,6 +664,8 @@ class DataService {
                   hashMD5: eKot.hashMD5,
                   inSum: AppConstants.isAutoSum,
                   tableName: efKot.tableName == null ? "" : efKot.tableName!,
+                  eyeColor: eKot.eyeColor,
+                  //RxBool(eKot.eyeColor),
                   userName: efKot.userName!,
                   kitchenMessage: efKot.kitchenMessage.toString(),
                   isUndoKot: eKot.isUndoKot,
