@@ -38,7 +38,7 @@ class _SummationPanelView extends State<SummationPanelView> implements ILoadingD
     return Obx(() {
       if (_controller.aggregatedList.isNotEmpty){
         return Expanded(
-            flex: getMinimumWidth(),
+            flex: 5,
             child: Dismissible(
             key: UniqueKey(),
             direction: DismissDirection.up,
@@ -78,7 +78,39 @@ class _SummationPanelView extends State<SummationPanelView> implements ILoadingD
             ),
         ),);
       } else {
-        return Container();
+        return Expanded(
+          flex: 5,
+          child: Card(
+            child: Stack(
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 15,left: 15, bottom: 15),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(AppLocalization.instance.translate("total"), style: TextStyles().titleStyleLargeBlack()),
+                          SizedBox(
+                            width: 30,
+                            height: 32,
+                            child: IconButton(
+                              icon: Image.asset(Assets.summation),
+                              onPressed: () => {},
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Expanded(
+                        child: Center(
+                          child: Text(''), // Placeholder message
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),);
       }
     });
   }
