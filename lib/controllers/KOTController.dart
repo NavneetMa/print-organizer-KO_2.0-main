@@ -34,6 +34,19 @@ class KOTController extends GetxController {
     super.onInit();
   }
 
+    Future<void> toggleEyeColor(Kot kot) async {
+    final DatabaseManager dbManager = await DatabaseHelper.getInstance;
+    //int? index = kotList.indexWhere((element) => element?.id == kot.id);
+    //if (index != null && index != -1) {
+      //kot.eyeColor.value = !kot.eyeColor.value;
+    kot.eyeColor = !kot.eyeColor;
+      // Update the database
+      //await dbManager.kotDao.updateEyeColor(kot.id!, kot.eyeColor.value);
+    await dbManager.kotDao.updateEyeColor(kot.id!, kot.eyeColor);
+      kotList.refresh();
+    //}
+  }
+
   Future<void> getKOTList({BuildContext? context}) async {
     try {
       isLoading(true);
