@@ -36,6 +36,8 @@ class _KotCardState extends State<KotCard> implements ILoadingDialog,IMessageDia
   final Logger _logger = Logger.getInstance;
   final String _tag = "KotCard";
   final KOTController _controller = Get.find<KOTController>();
+  bool isUnderFirstCategory = false; // Add this outside the ListView.builder
+  bool firstCategoryProcessed = false;
 
   @override
   void initState() {
@@ -71,6 +73,16 @@ class _KotCardState extends State<KotCard> implements ILoadingDialog,IMessageDia
                     itemCount: widget.kot.items.length,
                     itemBuilder: (BuildContext context, int index) {
                       final Item? item = widget.kot.items.elementAt(index);
+                      //bool eyeColor = widget.kot.eyeColor.value;
+                      bool eyeColor = widget.kot.eyeColor;
+                      if (item!.item!.trim().startsWith("--")) {
+                        if (!firstCategoryProcessed ) {
+                          isUnderFirstCategory = true; // Set the flag when the first category is encountered
+                          firstCategoryProcessed = true;
+                        } else {
+                          isUnderFirstCategory = false; // Reset the flag when the next category is encountered
+                        }
+                      }
                       return Container(
                         padding: AppSpaces().smallBottom,
                         child: Column(
@@ -83,6 +95,7 @@ class _KotCardState extends State<KotCard> implements ILoadingDialog,IMessageDia
                               item: item!,
                               itemIndex: index,
                               singleCategory: widget.kot.singleCategory,
+                              isUnderFirstCategory: isUnderFirstCategory && eyeColor,
                             ),
                             ...item.eItemAddition.map((e) => Container(padding: AppSpaces().mediumLeft, child: Text(e!.itemAddition.trim(), style: TextStyles().kotTextNormal()),)),
                             ...item.childItems.map((e) => Column(
