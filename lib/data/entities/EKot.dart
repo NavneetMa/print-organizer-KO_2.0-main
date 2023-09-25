@@ -15,6 +15,7 @@ class EKot {
   bool hideKot = false;
   int singleCategory = 1;
   bool tableNameMatch = false;
+  bool eyeColor = false;
   bool inSum = false;
 
   EKot({
@@ -30,6 +31,7 @@ class EKot {
     this.singleCategory = 1,
     this.inSum = false,
     this.tableNameMatch = false,
+    this.eyeColor = false
   });
 
   Map<String, dynamic> toJson() => {
@@ -44,7 +46,8 @@ class EKot {
         'hideKot': hideKot,
         'singleCategory': singleCategory,
         'inSum': false,
-        'tableNameMatch': tableNameMatch
+        'tableNameMatch': tableNameMatch,
+        'eyeColor' : eyeColor
       };
 }
 
