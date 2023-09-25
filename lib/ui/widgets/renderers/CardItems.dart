@@ -7,6 +7,7 @@ class CardItems extends StatefulWidget {
   final int singleCategory;
   final void Function(bool, Item, int) updateItemChecked;
   final int itemIndex;
+  final bool isUnderFirstCategory;
 
   const CardItems({
     Key? key,
@@ -14,6 +15,7 @@ class CardItems extends StatefulWidget {
     required this.updateItemChecked,
     required this.itemIndex,
     required this.singleCategory,
+    required this.isUnderFirstCategory,
   }) : super(key: key);
 
   @override
@@ -56,11 +58,11 @@ class _CardItems extends State<CardItems> {
       }
      itemDisplay = item.trim();
     }
-    if(isCategory){
-      return Text(itemDisplay, style: TextStyles().kotTextLargeCategory());
-    }else{
-      return Text(itemDisplay, style: TextStyles().kotTextLarge());
+    TextStyle style =  TextStyles().kotTextLarge();
+    if (widget.isUnderFirstCategory) {
+      style = style.copyWith(color: Colors.red); // Apply red color if it's the first category or its item
     }
+    return Text(itemDisplay, style: style);
 
   }
 
