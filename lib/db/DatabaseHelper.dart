@@ -12,7 +12,7 @@ class DatabaseHelper {
     _manager ??= await $FloorDatabaseManager
           .databaseBuilder(DBConstants.dbName)
           .addCallback(_callback)
-          .addMigrations([migrate1To2, migrate2To3, migrate3To4, migrate4To5, migrate5To6,migrate6To7,migrate7To8,migrate8To9])
+          .addMigrations([migrate1To2, migrate2To3, migrate3To4, migrate4To5, migrate5To6,migrate6To7,migrate7To8,migrate8To9,migrate9To10])
           .build();
     return _manager!;
   }
@@ -54,6 +54,7 @@ class DatabaseHelper {
       await MigrationAdapter.runMigrations(database, 6, 7, [migrate6To7]);
       await MigrationAdapter.runMigrations(database, 7, 8, [migrate7To8]);
       await MigrationAdapter.runMigrations(database, 8, 9, [migrate8To9]);
+      await MigrationAdapter.runMigrations(database, 9, 10, [migrate9To10]);
     },
   );
 
@@ -157,6 +158,18 @@ class DatabaseHelper {
 
   static final migrate8To9 = Migration(8, 9, (database) async {
     Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Migrating database version from 8 to 9.");
+    await database.transaction((txn) async {
+      txn.rawQuery('SELECT eyeColor from `${TableNames.KOT}`').catchError((error) {
+        txn.execute('ALTER TABLE ${TableNames.KOT} ADD COLUMN eyeColor INTEGER').then((_) {
+          Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column groupName to table ${TableNames.KOT}.");
+        });
+      });
+    });
+  });
+
+
+  static final migrate9To10 = Migration(9, 10, (database) async {
+    Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Migrating database version from 9 to 10.");
 
     List<Map> columns = await database.rawQuery('PRAGMA table_info(`${TableNames.KOT}`)');
     List<Map> columnsFKOT = await database.rawQuery('PRAGMA table_info(`${TableNames.FKOT}`)');
@@ -164,105 +177,111 @@ class DatabaseHelper {
     // Column: kot
     if (!columns.any((column) => column['name'] == 'kot')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN kot TEXT');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column kot to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column kot to table ${TableNames.KOT}.");
     }
 
     // Column: kotDismissed
     if (!columns.any((column) => column['name'] == 'kotDismissed')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN kotDismissed INTEGER');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column kotDismissed to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column kotDismissed to table ${TableNames.KOT}.");
     }
 
     // Column: receivedTime
     if (!columns.any((column) => column['name'] == 'receivedTime')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN receivedTime TEXT NOT NULL DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column receivedTime to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column receivedTime to table ${TableNames.KOT}.");
     }
 
     // Column: fKotWithSeparator
     if (!columns.any((column) => column['name'] == 'fKotWithSeparator')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN fKotWithSeparator TEXT NOT NULL DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column fKotWithSeparator to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column fKotWithSeparator to table ${TableNames.KOT}.");
     }
 
 
     // Column: hashMD5
     if (!columns.any((column) => column['name'] == 'hashMD5')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN hashMD5 TEXT NOT NULL DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column hashMD5 to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column hashMD5 to table ${TableNames.KOT}.");
     }
 
     // Column: snoozeDateTime
     if (!columns.any((column) => column['name'] == 'snoozeDateTime')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN snoozeDateTime TEXT NOT NULL DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column snoozeDateTime to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column snoozeDateTime to table ${TableNames.KOT}.");
     }
 
     // Column: isUndoKot
     if (!columns.any((column) => column['name'] == 'isUndoKot')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN isUndoKot INTEGER NOT NULL DEFAULT 0');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column isUndoKot to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column isUndoKot to table ${TableNames.KOT}.");
     }
 
     // Column: hideKot
     if (!columns.any((column) => column['name'] == 'hideKot')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN hideKot INTEGER NOT NULL DEFAULT 0');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column hideKot to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column hideKot to table ${TableNames.KOT}.");
     }
 
     // Column: singleCategory
     if (!columns.any((column) => column['name'] == 'singleCategory')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN singleCategory INTEGER NOT NULL DEFAULT 1');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column singleCategory to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column singleCategory to table ${TableNames.KOT}.");
     }
 
     // Column: tableNameMatch
     if (!columns.any((column) => column['name'] == 'tableNameMatch')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN tableNameMatch INTEGER NOT NULL DEFAULT 0');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column tableNameMatch to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column tableNameMatch to table ${TableNames.KOT}.");
+    }
+
+    // Column: eyeColor
+    if (!columns.any((column) => column['name'] == 'eyeColor')) {
+      await database.execute('ALTER TABLE ${TableNames.KOT} ADD COLUMN eyeColor INTEGER NOT NULL DEFAULT 0');
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column eyeColor to table ${TableNames.KOT}.");
     }
 
     // Column: inSum
     if (!columns.any((column) => column['name'] == 'inSum')) {
       await database.execute('ALTER TABLE `${TableNames.KOT}` ADD COLUMN inSum INTEGER NOT NULL DEFAULT 0');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column inSum to table ${TableNames.KOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column inSum to table ${TableNames.KOT}.");
     }
 
 
     // Column: FKOT tableName
     if (!columnsFKOT.any((column) => column['name'] == 'tableName')) {
       await database.execute('ALTER TABLE `${TableNames.FKOT}` ADD COLUMN tableName TEXT DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column tableName to table ${TableNames.FKOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column tableName to table ${TableNames.FKOT}.");
     }
 
     // Column: FKOT userName
     if (!columnsFKOT.any((column) => column['name'] == 'userName')) {
       await database.execute('ALTER TABLE `${TableNames.FKOT}` ADD COLUMN userName TEXT DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column userName to table ${TableNames.FKOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column userName to table ${TableNames.FKOT}.");
     }
 
     // Column: FKOT total
     if (!columnsFKOT.any((column) => column['name'] == 'total')) {
       await database.execute('ALTER TABLE `${TableNames.FKOT}` ADD COLUMN total REAL DEFAULT 0');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column total to table ${TableNames.FKOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column total to table ${TableNames.FKOT}.");
     }
 
     // Column: FKOT kotDismissed
     if (!columnsFKOT.any((column) => column['name'] == 'kotDismissed')) {
       await database.execute('ALTER TABLE `${TableNames.FKOT}` ADD COLUMN kotDismissed INTEGER DEFAULT 0');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column kotDismissed to table ${TableNames.FKOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column kotDismissed to table ${TableNames.FKOT}.");
     }
 
     // Column: FKOT receivedTime
     if (!columnsFKOT.any((column) => column['name'] == 'receivedTime')) {
       await database.execute('ALTER TABLE `${TableNames.FKOT}` ADD COLUMN receivedTime TEXT DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column receivedTime to table ${TableNames.FKOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column receivedTime to table ${TableNames.FKOT}.");
     }
 
     // Column: FKOT kitchenMessage
     if (!columnsFKOT.any((column) => column['name'] == 'kitchenMessage')) {
       await database.execute('ALTER TABLE `${TableNames.FKOT}` ADD COLUMN kitchenMessage TEXT DEFAULT ""');
-      Logger.getInstance.d("DatabaseHelper", "migrate8To9()", message: "Added column kitchenMessage to table ${TableNames.FKOT}.");
+      Logger.getInstance.d("DatabaseHelper", "migrate9To10()", message: "Added column kitchenMessage to table ${TableNames.FKOT}.");
     }
 
   });
