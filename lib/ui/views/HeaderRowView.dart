@@ -12,38 +12,36 @@ class HeaderRowView extends StatelessWidget {
     required this.kot,
     required this.kotIndex,
     required this.onKotSum,
+    required this.containerWidth
   }) : super(key: key);
 
   final Kot kot;
   final int kotIndex;
   final void Function(int) onKotSum;
+  final double containerWidth;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(
-                left: 10, bottom: 4, top: 6,),
-              child: Text(
-                "${AppLocalization.instance.translate("received_time")} ${DateTimeUtils.getInstance.formatKotTime(kot.receivedTime!)}",
-                style: TextStyles().titleStyleColored(textSize: 16),
-                maxLines: 2,
-                softWrap: true,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            TimePassedCounter(receivedTime: kot.receivedTime!)
-          ],
-        ),
+        // Container(
+        //   alignment: Alignment.centerLeft,
+        //   padding: const EdgeInsets.only(
+        //     left: 10, bottom: 4, top: 6,),
+        //   child: Text(
+        //     "${AppLocalization.instance.translate("received_time")} ${DateTimeUtils.getInstance.formatKotTime(kot.receivedTime!)}",
+        //     style: TextStyles().titleStyleColored(textSize: 16),
+        //     maxLines: 2,
+        //     softWrap: true,
+        //     overflow: TextOverflow.ellipsis,
+        //   ),
+        // ),
+        TimePassedCounter(receivedTime: kot.receivedTime!,containerWidth: containerWidth),
         Flexible(
-          child: HeaderButtons(kotIndex: kotIndex,onKotSum: onKotSum, kot: kot),
+          child: HeaderButtons(kotIndex: kotIndex,onKotSum: onKotSum, kot: kot,containerWidth: containerWidth),
         ),
       ],
     );
