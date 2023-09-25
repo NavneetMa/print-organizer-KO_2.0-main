@@ -21,15 +21,15 @@ class _KotListViewState extends State<KotListView> {
   @override
   void initState() {
     _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) {
-      PrefUtils().getNoOfKOT().then((value) {
-        setState(() {
-          if (value == 1) {
-            _containerWidth = 364;
-          } else {
-            _containerWidth = (ScreenUtils.getInstance.screenWidthDp) / value;
-          }
-        });
-      });
+      // PrefUtils().getNoOfKOT().then((value) {
+      //   setState(() {
+      //     if (value == 1) {
+      //       _containerWidth = 364;
+      //     } else {
+      //       _containerWidth = (ScreenUtils.getInstance.screenWidthDp) / value;
+      //     }
+      //   });
+      // });
     });
     PrefUtils().getPrintCategorySlip().then((value) => AppConstants.printCategorySlip = value!);
     super.initState();
